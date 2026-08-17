@@ -23,19 +23,30 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;ba
 .music{position:fixed;right:16px;bottom:16px;z-index:10;border:1px solid #e9d5ff55;background:#160025dd;color:white;border-radius:999px;padding:11px 16px;backdrop-filter:blur(12px);cursor:pointer;box-shadow:0 0 25px #8b5cf633}
 footer{text-align:center;padding:90px 20px 45px;color:#bba9c7}.heart{position:fixed;bottom:-30px;font-size:22px;animation:heart 4.5s linear forwards;z-index:8;pointer-events:none}@keyframes heart{to{transform:translateY(-110vh) rotate(25deg);opacity:0}}
 @media(max-width:720px){.hero{min-height:92vh}.hero-card{padding:50px 20px}.section{padding:70px 15px}.memory,.memory:nth-child(even){flex-direction:column;gap:24px}.photo{width:min(94vw,520px)}.note{width:100%;text-align:center}.video-box{padding:8px}.music{right:10px;bottom:10px}.lotus{font-size:34px}}
+
+.entrance{position:relative;overflow:hidden}
+.entrance:after{content:"";position:absolute;inset:12px;border:1px solid #d9a7ff22;border-radius:26px;pointer-events:none}
+.hero-card h1 span{color:#e8b8ff}
+.btn.big{padding:16px 30px;font-size:15px;letter-spacing:.06em}
+.hint{margin-top:14px;font-size:12px;color:#bfaacb;opacity:.9}
+#anilar{scroll-margin-top:30px}
+@media(max-width:720px){.btn.big{width:100%;max-width:320px}.hint{font-size:11px}}
 </style>
 </head>
 <body>
 <div class="orb a"></div><div class="orb b"></div><div id="petals"></div>
 <div class="wrap">
-<section class="hero">
-  <div class="hero-card">
+<section class="hero" id="giris">
+  <div class="hero-card entrance">
     <div class="lotus">🪷</div>
-    <div class="kicker">küçük bir doğum günü sürprizi</div>
-    <h1>İclal’im<br>İyi ki Doğdun 💜</h1>
-    <p>24 yaşına özel, mor bir dünya, birkaç güzel anı ve sana bırakılmış küçük bir not...</p>
-    <span class="age">24 yaşındasın ✨</span>
-    <div class="cta"><button class="btn" id="start">O OYNA ✨</button><button class="btn secondary" onclick="document.getElementById('anilar').scrollIntoView({behavior:'smooth'})">Anılarımıza Bak 🌙</button></div>
+    <div class="kicker">İCLAL'İM İÇİN KÜÇÜK BİR SÜRPRİZ</div>
+    <h1>İclal’im<br><span>İyi ki Doğdun</span> 💜</h1>
+    <p>24. yaşına özel, mor yaprakların ve güzel anıların arasında küçük bir kutlama hazırladım.</p>
+    <div class="age">24 yaşındasın ✨</div>
+    <div class="cta">
+      <button class="btn big" id="start">KUTLAMAYI BAŞLAT 💜</button>
+    </div>
+    <div class="hint">Müziği başlatmak için butona dokun ✨</div>
   </div>
 </section>
 
@@ -63,7 +74,7 @@ footer{text-align:center;padding:90px 20px 45px;color:#bba9c7}.heart{position:fi
 <section class="section">
   <h2 class="title">Bir de Bizim Videomuz 🎬</h2>
   <p class="subtitle">Bunu da buraya bırakıyorum. İstediğin zaman açıp izlersin. 🫶</p>
-  <div class="video-box"><video controls playsinline preload="metadata" src="assets/anilar.mp4"></video><div class="video-caption">İyi ki doğdun İclal’im. 💜</div></div>
+  <div class="video-box"><video controls playsinline preload="none" src="assets/anilar.mp4"></video><div class="video-caption">İyi ki doğdun İclal’im. 💜</div></div>
 </section>
 <footer>🪷 💜 🪷<br>24 yaşın kutlu olsun İclal’im.<br><br>Made with purple, petals &amp; memories.</footer>
 </div>
@@ -72,7 +83,12 @@ footer{text-align:center;padding:90px 20px 45px;color:#bba9c7}.heart{position:fi
 const music=document.getElementById('music'), btn=document.getElementById('musicBtn');
 function hearts(){for(let i=0;i<20;i++){setTimeout(()=>{const h=document.createElement('div');h.className='heart';h.textContent=['💜','♡','🪷','✨'][Math.floor(Math.random()*4)];h.style.left=Math.random()*100+'vw';h.style.animationDuration=(3.5+Math.random()*3)+'s';document.body.appendChild(h);setTimeout(()=>h.remove(),7000)},i*90)}}
 async function playMusic(){try{await music.play();btn.textContent='🎵 Müziği Kapat';return true}catch(e){btn.textContent='🎵 Müziği Aç';return false}}
-document.getElementById('start').onclick=async()=>{await playMusic();hearts();document.getElementById('anilar').scrollIntoView({behavior:'smooth'})};
+document.getElementById('start').onclick=async()=>{
+  await playMusic();
+  hearts();
+  document.getElementById('start').textContent='KUTLAMA BAŞLADI ✨';
+  setTimeout(()=>document.getElementById('anilar').scrollIntoView({behavior:'smooth'}),250);
+};
 btn.onclick=async()=>{if(music.paused) await playMusic(); else {music.pause();btn.textContent='🎵 Müziği Aç'}};
 const petals=document.getElementById('petals');for(let i=0;i<30;i++){const p=document.createElement('i');p.className='petal';p.style.left=Math.random()*100+'vw';p.style.animationDuration=(7+Math.random()*10)+'s';p.style.animationDelay=(-Math.random()*14)+'s';p.style.transform=`scale(${.6+Math.random()*1.1})`;petals.appendChild(p)}
 </script>
